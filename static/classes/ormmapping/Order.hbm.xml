@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: 
+License Type: Evaluation
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="Order" table="`Order`" lazy="false" discriminator-value="Order">
+		<id name="orderId" column="OrderId" type="string">
+			<generator class="assigned">
+			</generator>
+		</id>
+		<discriminator column="Discriminator" type="string"/>
+		<property name="oderDate" column="OderDate" type="date" not-null="false" lazy="false"/>
+		<property name="amount" column="Amount" type="double" not-null="true" lazy="false"/>
+		<many-to-one name="product" column="ProductId" class="Product" cascade="save-update,lock" unique="true" not-null="false" lazy="proxy" access="field">
+		</many-to-one>
+		<property name="orderState" column="OrderState" type="integer" length="10" not-null="true" lazy="false"/>
+		<subclass name="RedeemptionOrder" discriminator-value="RedeemptionOrder" lazy="false">
+			<property name="redeemCardNum" column="RedeemCardNum" type="string" length="255" not-null="false" lazy="false"/>
+		</subclass>
+		<subclass name="SubscriptionOrder" discriminator-value="SubscriptionOrder" lazy="false">
+			<property name="paymentCardNum" column="PaymentCardNum" type="string" length="255" not-null="false" lazy="false"/>
+		</subclass>
+	</class>
+</hibernate-mapping>

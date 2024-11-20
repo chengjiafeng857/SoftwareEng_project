@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: 
+License Type: Evaluation
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="Portfolio" table="Portfolio" lazy="false">
+		<id name="PortfolioId" column="PortfolioId" type="integer" unsaved-value="0">
+			<generator class="native">
+			</generator>
+		</id>
+		<property name="totalInvestment" column="TotalInvestment" type="double" not-null="true" lazy="false"/>
+		<property name="totalEarning" column="TotalEarning" type="double" not-null="true" lazy="false"/>
+		<one-to-one name="user" class="User" cascade="save-update,lock" property-ref="portfolio" lazy="proxy" access="field"/>
+	</class>
+</hibernate-mapping>

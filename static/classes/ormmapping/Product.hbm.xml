@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: 
+License Type: Evaluation
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="Product" table="Product" lazy="false">
+		<id name="productId" column="ProductId" type="string">
+			<generator class="assigned">
+			</generator>
+		</id>
+		<many-to-one name="exchange" cascade="lock" column="ExchangeId" class="Exchange" not-null="false" lazy="proxy" access="field">
+		</many-to-one>
+		<property name="productName" column="ProductName" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="interestRate" column="InterestRate" type="double" not-null="true" lazy="false"/>
+		<property name="riskLevel" column="RiskLevel" type="integer" length="10" not-null="true" lazy="false"/>
+		<one-to-one name="order" class="Order" cascade="save-update,lock" property-ref="product" lazy="proxy" access="field"/>
+	</class>
+</hibernate-mapping>
